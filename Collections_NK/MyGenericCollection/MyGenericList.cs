@@ -64,17 +64,8 @@ public class MyGenericList<T> : MyGenericCollection<T>, IList<T>, IReadOnlyList<
 
         for (int i = startIndex; i < Count; i++)
         {
-            //if (_items[i] is string str && str.Equals(item))
-            //    return i;
-
-            //else if (EqualityComparer<T>.Default.Equals(_items[i], item))
-            //    return i;
-
             if (EqualityComparer<T>.Default.Equals(_items[i], item))
                 return i;
-
-            //if (_items[i].Equals(item))
-            //    return i;
         }
 
         return -1;
