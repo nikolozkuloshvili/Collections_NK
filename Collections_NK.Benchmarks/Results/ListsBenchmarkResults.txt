@@ -1,0 +1,43 @@
+
+| Method                 | Operations | Mean     | Error    | StdDev   | Gen0     | Gen1     | Gen2     | Allocated |
+|------------------------|-----------:|---------:|---------:|---------:|---------:|---------:|---------:|----------:|
+| ArrayList_Add          | 20000      | 201.6 us | 30.81 us | 1.69 us  | 124.7559 | 124.7559 | 124.7559 | 981.12 KB |
+| ArrayList_Insert       | 20000      | 25.01 ms | 3.603 ms | 0.197 ms | 93.7500  | 93.7500  | 93.7500  | 981.11 KB |
+| ArrayList_Clear        | 20000      | 271.2 us | 867.0 us | 47.52 us | 124.7559 | 124.7559 | 124.7559 | 981.12 KB |
+| ArrayList_Remove       | 20000      | 26.12 ms | 5.485 ms | 0.301 ms | 93.7500  | 93.7500  | 93.7500  | 1.42 MB   |
+| ArrayList_RemoveAt     | 20000      | 27.14 ms | 40.31 ms | 2.210 ms | 93.7500  | 93.7500  | 93.7500  | 981.11 KB |
+| ArrayList_Contains     | 20000      | 158.2 ms | 36.02 ms | 1.97 ms  |          |          |          | 1.42 MB   |
+| ArrayList_IndexOf      | 20000      | 183.1 ms | 40.60 ms | 2.23 ms  |          |          |          | 1.42 MB   |
+| ArrayList_CopyTo       | 20000      | 252.3 us | 194.6 us | 10.67 us | 166.5039 | 166.5039 | 166.5039 | 1.11 MB   |
+
+| Method                 | Operations | Mean     | Error    | StdDev   | Gen0     | Gen1     | Gen2     | Allocated |
+|------------------------|-----------:|---------:|---------:|---------:|---------:|---------:|---------:|----------:|
+| GenericList_Add        | 20000      | 56.73 us | 117.10 us| 6.419 us | 41.6260  | 41.6260  | 41.6260  | 256.36 KB |
+| GenericList_Insert     | 20000      | 10.52 ms | 1.714 ms | 0.094 ms | 31.2500  | 31.2500  | 31.2500  | 256.35 KB |
+| GenericList_Clear      | 20000      | 49.67 us | 32.37 us | 1.774 us | 41.6260  | 41.6260  | 41.6260  | 256.36 KB |
+| GenericList_Remove     | 20000      | 200.4 ms | 30.24 ms | 1.66 ms  |          |          |          | 256.34 KB |
+| GenericList_RemoveAt   | 20000      | 199.1 ms | 3.03 ms  | 0.17 ms  |          |          |          | 256.34 KB |
+| GenericList_Contains   | 20000      | 12.84 ms | 27.66 ms | 1.516 ms | 31.2500  | 31.2500  | 31.2500  | 256.35 KB |
+| GenericList_IndexOf    | 20000      | 14.32 ms | 2.897 ms | 0.159 ms | 31.2500  | 31.2500  | 31.2500  | 256.35 KB |
+| GenericList_CopyTo     | 20000      | 50.19 us | 28.18 us | 1.544 us | 41.6260  | 41.6260  | 41.6260  | 334.51 KB |
+
+| Method                 | Operations | Mean     | Error    | StdDev   | Gen0     | Gen1     | Gen2     | Allocated |
+|------------------------|-----------:|---------:|---------:|---------:|---------:|---------:|---------:|----------:|
+| MyGenericList_Add      | 20000      | 46.95 us | 6.432 us | 0.353 us | 41.6260  | 41.6260  | 41.6260  | 256.42 KB |
+| MyGenericList_Insert   | 20000      | 101.2 ms | 2.22 ms  | 0.12 ms  |          |          |          | 256.41 KB |
+| MyGenericList_Clear    | 20000      | 49.28 us | 19.65 us | 1.077 us | 41.6260  | 41.6260  | 41.6260  | 256.45 KB |
+| MyGenericList_Remove   | 20000      | 101.4 ms | 3.48 ms  | 0.19 ms  |          |          |          | 256.41 KB |
+| MyGenericList_RemoveAt | 20000      | 104.4 ms | 21.05 ms | 1.15 ms  |          |          |          | 256.41 KB |
+| MyGenericList_Contains | 20000      | 127.2 ms | 9.43 ms  | 0.52 ms  |          |          |          | 256.41 KB |
+| MyGenericList_IndexOf  | 20000      | 126.6 ms | 3.14 ms  | 0.17 ms  |          |          |          | 256.41 KB |
+| MyGenericList_CopyTo   | 20000      | 248.1 us | 143.7 us | 7.88 us  | 83.0078  | 41.5039  | 41.5039  | 803.32 KB |
+
+| Method                 | Operations | Mean     | Error    | StdDev   | Gen0     | Gen1     | Gen2     | Allocated |
+|------------------------|-----------:|---------:|---------:|---------:|---------:|---------:|---------:|----------:|
+| MyList_Add             | 20000      | 220.8 us | 678.7 us | 37.20 us | 124.7559 | 124.7559 | 124.7559 | 981.22 KB |
+| MyList_Insert          | 20000      | 478.0 ms | 7.46 ms  | 0.41 ms  |          |          |          | 981.18 KB |
+| MyList_Remove          | 20000      | 153.0 ms | 19.40 ms | 1.06 ms  |          |          |          | 1.42 MB   |
+| MyList_RemoveAt        | 20000      | 504.8 ms | 12.58 ms | 0.69 ms  |          |          |          | 981.18 KB |
+| MyList_Contains        | 20000      | 152.2 ms | 2.37 ms  | 0.13 ms  |          |          |          | 1.42 MB   |
+| MyList_IndexOf         | 20000      | 152.0 ms | 4.63 ms  | 0.25 ms  |          |          |          | 1.42 MB   |
+| MyList_CopyTo          | 20000      | 348.9 us | 173.3 us | 9.50 us  | 166.5039 | 166.5039 | 166.5039 | 1.11 MB   |
