@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collections_NK", "Collectio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collections_NK.Benchmarks", "Collections_NK.Benchmarks\Collections_NK.Benchmarks.csproj", "{B02FBE68-CA53-40BD-BB5D-5E2E40B17514}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collections_NK.UnitTests", "Collections_NK.UnitTests\Collections_NK.UnitTests.csproj", "{F62C6CFD-37D4-4BF7-9852-C95EECB9A152}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B02FBE68-CA53-40BD-BB5D-5E2E40B17514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B02FBE68-CA53-40BD-BB5D-5E2E40B17514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B02FBE68-CA53-40BD-BB5D-5E2E40B17514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62C6CFD-37D4-4BF7-9852-C95EECB9A152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62C6CFD-37D4-4BF7-9852-C95EECB9A152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62C6CFD-37D4-4BF7-9852-C95EECB9A152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62C6CFD-37D4-4BF7-9852-C95EECB9A152}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
