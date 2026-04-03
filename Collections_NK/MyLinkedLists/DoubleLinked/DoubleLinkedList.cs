@@ -14,7 +14,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddFirst(DoubleLinkedNode<T> node)
     {
-        ValidateNewNode_IsNot_InList(node);
+        Node_IsNotNull_Validater(node);
 
         if (_first == null)
         {
@@ -36,7 +36,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddLast(DoubleLinkedNode<T> node)
     {
-        ValidateNewNode_IsNot_InList(node);
+        Node_IsNotNull_Validater(node);
 
         if (_first == null)
         {
@@ -70,6 +70,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             newNode.Previous = _last;
             _last = newNode;
             newNode.List = this;
+            Count++;
             return;
         }
 
@@ -102,6 +103,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             _first.Previous = newNode;
             _first = newNode;
             newNode.List = this;
+            Count++;
             return;
         }
 
