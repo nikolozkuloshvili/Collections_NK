@@ -18,6 +18,8 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         if (_first == null)
         {
+            ValidateNewNode_IsNot_InList(node);
+
             _first = node;
             _last = node;
             node.List = this;
@@ -41,6 +43,8 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         if (_first == null)
         {
+            ValidateNewNode_IsNot_InList(node);
+
             _first = node;
             _last = node;
             node.List = this;

@@ -18,6 +18,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         if (_first == null)
         {
+            ValidateNewNode_IsNot_InList(node);
+
             _first = node;
             _last = node;
             node.List = this;
@@ -41,6 +43,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         if (_first == null)
         {
+            ValidateNewNode_IsNot_InList(node);
+
             _first = node;
             _last = node;
             node.List = this;
@@ -278,7 +282,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         if (node.List != null)
             throw new ArgumentException("Node already belongs to other list.");
-    }            
+    }
 
 
     private void If_ListEmpty_ThrowExecption()
