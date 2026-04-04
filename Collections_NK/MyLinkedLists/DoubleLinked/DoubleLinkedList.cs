@@ -20,6 +20,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         {
             _first = node;
             _last = node;
+            node.List = this;
         }
         else
         {
@@ -42,6 +43,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         {
             _first = node;
             _last = node;
+            node.List = this;
         }
         else
         {
@@ -263,6 +265,9 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         if (node!.List == this)
             throw new ArgumentException("Node already belongs to this list.");
+
+        if (node.List != null)
+            throw new ArgumentException("Node already belongs to other list.");
     }
 
     private void If_ListEmpty_ThrowExecption()
