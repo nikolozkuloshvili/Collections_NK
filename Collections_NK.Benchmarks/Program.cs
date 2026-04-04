@@ -12,7 +12,8 @@ internal class Program
                 Console.WriteLine("0 - List");
                 Console.WriteLine("1 - Queue");
                 Console.WriteLine("2 - Stack");
-                Console.WriteLine("3 - Your Custom Code Tester");
+                Console.WriteLine("3 - LinkedList");
+                Console.WriteLine("4 - Your Custom Code Tester");
                 Console.WriteLine("X - Exit");
 
                 string? input = Console.ReadLine();
@@ -30,7 +31,8 @@ internal class Program
                     case 0: ListTester.Runner(); break;
                     case 1: QueueTester.Runner(); break;
                     case 2: StackTester.Runner(); break;
-                    case 3: CustomTester.Runner(); break;
+                    case 3: LinkedListTester.Runner(); break;
+                    case 4: CustomTester.Runner(); break;
                 }
 
                 Console.WriteLine("\nBenchmark finished. Run another? (Y/N)");
