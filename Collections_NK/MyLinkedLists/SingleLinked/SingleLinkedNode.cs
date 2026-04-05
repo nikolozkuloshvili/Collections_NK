@@ -4,7 +4,7 @@ public class SingleLinkedNode<T>
 {
     public SingleLinkedNode<T>? Next;
     public SingleLinkedList<T>? List;
-    
+
     public T Value { get; }
 
     public SingleLinkedNode(T value)

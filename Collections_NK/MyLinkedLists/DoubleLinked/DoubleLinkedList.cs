@@ -255,6 +255,23 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         _first = null; _last = null; Count = 0;
     }
 
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        if (array == null)
+            throw new ArgumentNullException(nameof(array));
+        if (arrayIndex < 0)
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Index must be non-negative.");
+        if (array.Length - arrayIndex < Count)
+            throw new ArgumentException("The number of elements in the collection is greater than the available space from index to the end of the array.");
+
+        var first = _first;
+        for (int i = 0; i < Count && first != null; i++)
+        {
+            array.SetValue(first.Value, arrayIndex + i);
+            first = first.Next;
+        }
+    }
+
     private void Node_IsNotNull_Validater(DoubleLinkedNode<T> node)
     {
         if (node == null)
@@ -280,26 +297,6 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         if (node!.List == this) return true;
         else throw new ArgumentException("Node is not in this list");
-    }
-
-    public void CopyTo(T[] array, int arrayIndex)
-    {
-        if (array == null)
-            throw new ArgumentNullException(nameof(array));
-        if (arrayIndex < 0)
-            throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Index must be non-negative.");
-        if (array.Length - arrayIndex < Count)
-            throw new ArgumentException("The number of elements in the collection is greater than the available space from index to the end of the array.");
-
-        var first = _first;
-        for (int i = 0; i < Count && first != null; i++)
-        {
-            {
-                array.SetValue(first.Value, arrayIndex + i);
-            }
-
-            first = first.Next;
-        }
     }
 
     bool ICollection<T>.Contains(T item) => Find(item) != null;

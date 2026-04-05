@@ -100,16 +100,16 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             return;
         }
 
-        var current = _first;
-        while (current != null && current.Next != node)
+        var start = _first;
+        while (start != null && start.Next != node)
         {
-            current = current.Next;
+            start = start.Next;
         }
 
-        if (current == null)
+        if (start == null)
             throw new ArgumentNullException("Node is not in this list");
 
-        current.Next = newNode;
+        start.Next = newNode;
         newNode.Next = node;
 
         newNode.List = this;
@@ -265,6 +265,23 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         _first = null; _last = null; Count = 0;
     }
 
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        if (array == null)
+            throw new ArgumentNullException(nameof(array));
+        if (arrayIndex < 0)
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Index must be non-negative.");
+        if (array.Length - arrayIndex < Count)
+            throw new ArgumentException("The number of elements in the collection is greater than the available space from index to the end of the array.");
+
+        var start = _first;
+        for (int i = 0; i < Count && start != null; i++)
+        {
+            array.SetValue(start.Value, arrayIndex + i);
+            start = start.Next;
+        }
+    }
+
     private bool IsEmpty() => _first == null;
 
     private void Node_IsNotNull_Validater(SingleLinkedNode<T> node)
@@ -288,26 +305,6 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     {
         if (node!.List == this) return true;
         else throw new ArgumentException("Node is not in this list");
-    }
-
-    public void CopyTo(T[] array, int arrayIndex)
-    {
-        if (array == null)
-            throw new ArgumentNullException(nameof(array));
-        if (arrayIndex < 0)
-            throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Index must be non-negative.");
-        if (array.Length - arrayIndex < Count)
-            throw new ArgumentException("The number of elements in the collection is greater than the available space from index to the end of the array.");
-
-        var current = _first;
-        for (int i = 0; i < Count && current != null; i++)
-        {
-            {
-                array.SetValue(current.Value, arrayIndex + i);
-            }
-
-            current = current.Next;
-        }
     }
 
     bool ICollection<T>.Contains(T item) => Find(item) != null;
