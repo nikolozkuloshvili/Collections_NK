@@ -14,11 +14,9 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddFirst(SingleLinkedNode<T> node)
     {
-        Node_IsNotNull_Validater(node);
-
-        if (_first == null)
+        if (IsEmpty())
         {
-            ValidateNewNode_IsNot_InList(node);
+            ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
 
             _first = node;
             _last = node;
@@ -26,7 +24,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         }
         else
         {
-            AddBefore(_first, node);
+            AddBefore(_first!, node);
         }
     }
 
@@ -39,11 +37,9 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddLast(SingleLinkedNode<T> node)
     {
-        ValidateNewNode_IsNot_InList(node);
-
-        if (_first == null)
+        if (IsEmpty())
         {
-            ValidateNewNode_IsNot_InList(node);
+            ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
 
             _first = node;
             _last = node;
@@ -64,11 +60,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddAfter(SingleLinkedNode<T> node, SingleLinkedNode<T> newNode)
     {
-        if (node == newNode)
-            throw new ArgumentException("Node already belongs to this list.");
-
-        Node_IsNotNull_Validater(node);
-        ValidateNewNode_IsNot_InList(newNode);
+        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNewNode_IsNot_Null_Or_AlreadyAdded(newNode);
 
         if (node == _last)
         {
@@ -95,11 +88,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddBefore(SingleLinkedNode<T> node, SingleLinkedNode<T> newNode)
     {
-        if (node == newNode)
-            throw new ArgumentException("Node already belongs to this list.");
-
-        Node_IsNotNull_Validater(node);
-        ValidateNewNode_IsNot_InList(newNode);
+        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNewNode_IsNot_Null_Or_AlreadyAdded(newNode);
 
         if (node == _first)
         {
@@ -166,7 +156,10 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void Remove(SingleLinkedNode<T> node)
     {
-        Node_IsNotNull_Validater(node);
+        if (IsEmpty())
+            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
+
+        ValidateNodeBelongsToThisList_And_IsNotNull(node);
 
         if (node == _first)
         {
@@ -179,22 +172,22 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             start = start.Next;
         }
 
-        if (start == null)
-            throw new ArgumentNullException("Node is not in this list");
-
-        if (start.Next == _last)
+        if (start!.Next == _last)
         {
             RemoveLast(); return;
         }
 
         start.Next = node.Next;
-        node.List = null;
 
+        node.List = null;
         Count--;
     }
 
     public bool Remove(T value)
     {
+        if (IsEmpty())
+            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
+
         if (EqualityComparer<T>.Default.Equals(_first!.Value, value))
         {
             RemoveFirst(); return true;
@@ -214,12 +207,16 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             node = node.Next;
         }
 
+        if (node.Next == null)
+            throw new ArgumentNullException("Node with this value is not in this list");
+
         return false;
     }
 
     public void RemoveFirst()
     {
-        If_ListEmpty_ThrowExecption();
+        if (IsEmpty())
+            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
 
         if (_first == _last)
         {
@@ -234,7 +231,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void RemoveLast()
     {
-        If_ListEmpty_ThrowExecption();
+        if (IsEmpty())
+            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
 
         if (_first == _last)
         {
@@ -255,17 +253,19 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void Clear()
     {
-        var current = _first;
-        while (current != null)
+        var start = _first;
+        while (start != null)
         {
-            var next = current.Next;
-            current.Next = null;
-            current.List = null;
-            current = next;
+            var next = start.Next;
+            start.Next = null;
+            start.List = null;
+            start = next;
         }
 
         _first = null; _last = null; Count = 0;
     }
+
+    private bool IsEmpty() => _first == null;
 
     private void Node_IsNotNull_Validater(SingleLinkedNode<T> node)
     {
@@ -273,7 +273,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             throw new ArgumentNullException("Node Can't be empty.");
     }
 
-    private void ValidateNewNode_IsNot_InList(SingleLinkedNode<T>? node)
+    private void ValidateNewNode_IsNot_Null_Or_AlreadyAdded(SingleLinkedNode<T>? node)
     {
         Node_IsNotNull_Validater(node!);
 
@@ -284,11 +284,10 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             throw new ArgumentException("Node already belongs to other list.");
     }
 
-
-    private void If_ListEmpty_ThrowExecption()
+    private bool ValidateNodeBelongsToThisList_And_IsNotNull(SingleLinkedNode<T> node)
     {
-        if (_first == null)
-            throw new ArgumentNullException("List is already empty, nothing left to remove.");
+        if (node!.List == this) return true;
+        else throw new ArgumentException("Node is not in this list");
     }
 
     public void CopyTo(T[] array, int arrayIndex)
@@ -311,12 +310,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         }
     }
 
-    bool ICollection<T>.Contains(T item)
-    {
-        if (Find(item) != null) return true;
-
-        else return false;
-    }
+    bool ICollection<T>.Contains(T item) => Find(item) != null;
 
     public IEnumerator<T> GetEnumerator() => new SingleLinkedEnumerator<T>(_first!);
 
@@ -336,4 +330,3 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     void IDeserializationCallback.OnDeserialization(object? sender) => throw new NotImplementedException();
 }
-

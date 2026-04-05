@@ -11,7 +11,7 @@ public class DoubleLinkedListEnumerator<T> : IEnumerator<T>
 
     public DoubleLinkedListEnumerator(DoubleLinkedNode<T> node)
     {
-        _first = node ?? throw new ArgumentNullException();
+        _first = node ?? throw new ArgumentNullException("List is Empty");
         Reset();
     }
 
