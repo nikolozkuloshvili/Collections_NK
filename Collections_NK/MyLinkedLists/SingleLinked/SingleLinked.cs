@@ -16,12 +16,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     {
         if (IsEmpty())
         {
-            ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
-
-            _first = node;
-            _last = node;
-            node.List = this;
-            Count++;
+            Add_FirstNode_ToEmptyList(node);
         }
         else
         {
@@ -40,12 +35,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     {
         if (IsEmpty())
         {
-            ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
-
-            _first = node;
-            _last = node;
-            node.List = this;
-            Count++;
+            Add_FirstNode_ToEmptyList(node);
         }
         else
         {
@@ -278,6 +268,16 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     }
 
     private bool IsEmpty() => _first == null;
+
+    private void Add_FirstNode_ToEmptyList(SingleLinkedNode<T> node)
+    {
+        ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
+
+        _first = node;
+        _last = node;
+        node.List = this;
+        Count++;
+    }
 
     private void ValidateNewNode_IsNot_Null_Or_AlreadyAdded(SingleLinkedNode<T>? node)
     {

@@ -16,12 +16,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     {
         if (IsEmpty())
         {
-            ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
-
-            _first = node;
-            _last = node;
-            node.List = this;
-            Count++;
+            Add_FirstNode_ToEmptyList(node);
         }
         else
         {
@@ -40,12 +35,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     {
         if (IsEmpty())
         {
-            ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
-
-            _first = node;
-            _last = node;
-            node.List = this;
-            Count++;
+            Add_FirstNode_ToEmptyList(node);
         }
         else
         {
@@ -124,7 +114,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     public DoubleLinkedNode<T>? Find(T value)
     {
         if (IsEmpty())
-            throw new ArgumentNullException("List is empty. Nothing to search for.");
+            throw new ArgumentNullException("List is empty. Nothing left to search for.");
 
         ValidateValue_IsNot_Null(value);
 
@@ -145,7 +135,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     public DoubleLinkedNode<T>? FindLast(T value)
     {
         if (IsEmpty())
-            throw new ArgumentNullException("List is empty. Nothing to search for.");
+            throw new ArgumentNullException("List is empty. Nothing left to search for.");
 
         ValidateValue_IsNot_Null(value);
 
@@ -165,7 +155,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     public void Remove(DoubleLinkedNode<T> node)
     {
         if (IsEmpty())
-            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
+            throw new ArgumentNullException("List is already empty. Nothing left to be deleted.");
 
         ValidateNode_BelongsTo_ThisList_And_IsNot_Null(node);
 
@@ -272,6 +262,16 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     }
 
     private bool IsEmpty() => _first == null;
+
+    private void Add_FirstNode_ToEmptyList(DoubleLinkedNode<T> node)
+    {
+        ValidateNewNode_IsNot_Null_Or_AlreadyAdded(node);
+
+        _first = node;
+        _last = node;
+        node.List = this;
+        Count++;
+    }
 
     private void ValidateNewNode_IsNot_Null_Or_AlreadyAdded(DoubleLinkedNode<T> node)
     {
