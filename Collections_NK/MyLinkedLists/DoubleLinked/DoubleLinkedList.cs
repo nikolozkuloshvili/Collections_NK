@@ -60,7 +60,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddAfter(DoubleLinkedNode<T> node, DoubleLinkedNode<T> newNode)
     {
-        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNode_BelongsTo_ThisList_And_IsNot_Null(node);
         ValidateNewNode_IsNot_Null_Or_AlreadyAdded(newNode);
 
         if (node == _last)
@@ -90,7 +90,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddBefore(DoubleLinkedNode<T> node, DoubleLinkedNode<T> newNode)
     {
-        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNode_BelongsTo_ThisList_And_IsNot_Null(node);
         ValidateNewNode_IsNot_Null_Or_AlreadyAdded(newNode);
 
         if (node == _first)
@@ -121,6 +121,8 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public DoubleLinkedNode<T>? Find(T value)
     {
+        ValidateValue_IsNot_Null(value);
+
         var start = _first;
         while (start != null)
         {
@@ -137,6 +139,8 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public DoubleLinkedNode<T>? FindLast(T value)
     {
+        ValidateValue_IsNot_Null(value);
+
         var node = _last;
         while (node != null)
         {
@@ -155,7 +159,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         if (IsEmpty())
             throw new ArgumentNullException("List is already empty. Nothing left to delete.");
 
-        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNode_BelongsTo_ThisList_And_IsNot_Null(node);
 
         if (node == _first)
         {
@@ -182,6 +186,8 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public bool Remove(T value)
     {
+        ValidateValue_IsNot_Null(value);
+
         if (IsEmpty())
             throw new ArgumentNullException("List is already empty. Nothing left to delete.");
 
@@ -272,15 +278,12 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         }
     }
 
-    private void Node_IsNotNull_Validater(DoubleLinkedNode<T> node)
-    {
-        if (node == null)
-            throw new ArgumentNullException("Node Can't be empty.");
-    }
+    private bool IsEmpty() => _first == null;
 
     private void ValidateNewNode_IsNot_Null_Or_AlreadyAdded(DoubleLinkedNode<T> node)
     {
-        Node_IsNotNull_Validater(node);
+        if (node == null)
+            throw new ArgumentNullException("Node Can't be empty.");
 
         if (node!.List == this)
             throw new ArgumentException("Node already belongs to this list.");
@@ -289,14 +292,21 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             throw new ArgumentException("Node already belongs to other list.");
     }
 
-    private bool IsEmpty() => _first == null;
-
-    private bool ValidateNodeBelongsToThisList_And_IsNotNull(DoubleLinkedNode<T> node)
+    private bool ValidateNode_BelongsTo_ThisList_And_IsNot_Null(DoubleLinkedNode<T> node)
     {
-        Node_IsNotNull_Validater(node);
+        if (node == null)
+            throw new ArgumentNullException("Node Can't be empty.");
 
-        if (node!.List == this) return true;
-        else throw new ArgumentException("Node is not in this list");
+        if (node!.List == this) 
+            return true;
+        else 
+            throw new ArgumentException("Node is not in this list");
+    }
+
+    private void ValidateValue_IsNot_Null(T value)
+    {
+        if (value == null)
+            throw new ArgumentNullException();
     }
 
     bool ICollection<T>.Contains(T item) => Find(item) != null;

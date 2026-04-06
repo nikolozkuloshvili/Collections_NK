@@ -60,7 +60,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddAfter(SingleLinkedNode<T> node, SingleLinkedNode<T> newNode)
     {
-        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNode_BelongsTo_ThisList_And_IsNot_Null(node);
         ValidateNewNode_IsNot_Null_Or_AlreadyAdded(newNode);
 
         if (node == _last)
@@ -88,7 +88,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public void AddBefore(SingleLinkedNode<T> node, SingleLinkedNode<T> newNode)
     {
-        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNode_BelongsTo_ThisList_And_IsNot_Null(node);
         ValidateNewNode_IsNot_Null_Or_AlreadyAdded(newNode);
 
         if (node == _first)
@@ -125,6 +125,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public SingleLinkedNode<T>? Find(T value)
     {
+        ValidateValue_IsNot_Null(value);
+
         var node = _first;
         while (node != null)
         {
@@ -140,6 +142,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public SingleLinkedNode<T>? FindLast(T value)
     {
+        ValidateValue_IsNot_Null(value);
+
         var node = _first;
         SingleLinkedNode<T>? lastFounded = null;
         while (node != null)
@@ -159,7 +163,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         if (IsEmpty())
             throw new ArgumentNullException("List is already empty. Nothing left to delete.");
 
-        ValidateNodeBelongsToThisList_And_IsNotNull(node);
+        ValidateNode_BelongsTo_ThisList_And_IsNot_Null(node);
 
         if (node == _first)
         {
@@ -185,6 +189,8 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public bool Remove(T value)
     {
+        ValidateValue_IsNot_Null(value);
+
         if (IsEmpty())
             throw new ArgumentNullException("List is already empty. Nothing left to delete.");
 
@@ -284,15 +290,10 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     private bool IsEmpty() => _first == null;
 
-    private void Node_IsNotNull_Validater(SingleLinkedNode<T> node)
+    private void ValidateNewNode_IsNot_Null_Or_AlreadyAdded(SingleLinkedNode<T>? node)
     {
         if (node == null)
             throw new ArgumentNullException("Node Can't be empty.");
-    }
-
-    private void ValidateNewNode_IsNot_Null_Or_AlreadyAdded(SingleLinkedNode<T>? node)
-    {
-        Node_IsNotNull_Validater(node!);
 
         if (node!.List == this)
             throw new ArgumentException("Node already belongs to this list.");
@@ -301,10 +302,21 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             throw new ArgumentException("Node already belongs to other list.");
     }
 
-    private bool ValidateNodeBelongsToThisList_And_IsNotNull(SingleLinkedNode<T> node)
+    private bool ValidateNode_BelongsTo_ThisList_And_IsNot_Null(SingleLinkedNode<T> node)
     {
-        if (node!.List == this) return true;
-        else throw new ArgumentException("Node is not in this list");
+        if (node == null)
+            throw new ArgumentNullException("Node Can't be empty.");
+
+        if (node!.List == this) 
+            return true;
+        else 
+            throw new ArgumentException("Node is not in this list");
+    }
+
+    private void ValidateValue_IsNot_Null(T value)
+    {
+        if (value == null)
+            throw new ArgumentNullException();
     }
 
     bool ICollection<T>.Contains(T item) => Find(item) != null;
