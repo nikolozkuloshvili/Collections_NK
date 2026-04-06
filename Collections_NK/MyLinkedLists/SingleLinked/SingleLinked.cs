@@ -101,7 +101,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         }
 
         var start = _first;
-        while (start != null && start.Next != node)
+        while (start!.Next != node)
         {
             start = start.Next;
         }
@@ -122,6 +122,9 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public SingleLinkedNode<T>? Find(T value)
     {
+        if (IsEmpty())
+            throw new ArgumentNullException("List is empty. Nothing to search for.");
+
         ValidateValue_IsNot_Null(value);
 
         var node = _first;
@@ -139,6 +142,9 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public SingleLinkedNode<T>? FindLast(T value)
     {
+        if (IsEmpty())
+            throw new ArgumentNullException("List is already empty. Nothing to search for.");
+
         ValidateValue_IsNot_Null(value);
 
         var node = _first;
@@ -193,6 +199,9 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
         var num = Count;
         Remove(node!);
+
+        if (num > Count)
+            return true;
 
         return false;
     }
@@ -285,9 +294,9 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         if (node == null)
             throw new ArgumentNullException("Node Can't be empty.");
 
-        if (node!.List == this) 
+        if (node!.List == this)
             return true;
-        else 
+        else
             throw new ArgumentException("Node is not in this list");
     }
 

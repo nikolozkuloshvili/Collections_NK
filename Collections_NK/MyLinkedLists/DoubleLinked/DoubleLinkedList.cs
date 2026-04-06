@@ -121,6 +121,9 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public DoubleLinkedNode<T>? Find(T value)
     {
+        if (IsEmpty())
+            throw new ArgumentNullException("List is empty. Nothing to search for.");
+
         ValidateValue_IsNot_Null(value);
 
         var start = _first;
@@ -139,6 +142,9 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public DoubleLinkedNode<T>? FindLast(T value)
     {
+        if (IsEmpty())
+            throw new ArgumentNullException("List is empty. Nothing to search for.");
+
         ValidateValue_IsNot_Null(value);
 
         var node = _last;
