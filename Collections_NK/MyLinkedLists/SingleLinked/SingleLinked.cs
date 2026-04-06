@@ -106,10 +106,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             start = start.Next;
         }
 
-        if (start == null)
-            throw new ArgumentNullException("Node is not in this list");
-
-        start.Next = newNode;
+        start!.Next = newNode;
         newNode.Next = node;
 
         newNode.List = this;
@@ -171,7 +168,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         }
 
         var start = _first;
-        while (start != null && start.Next != node)
+        while (start!.Next != node)
         {
             start = start.Next;
         }
@@ -189,32 +186,13 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public bool Remove(T value)
     {
-        ValidateValue_IsNot_Null(value);
-
         if (IsEmpty())
             throw new ArgumentNullException("List is already empty. Nothing left to delete.");
 
-        if (EqualityComparer<T>.Default.Equals(_first!.Value, value))
-        {
-            RemoveFirst(); return true;
-        }
+        var node = Find(value);
 
-        var node = _first;
-        while (node.Next != null)
-        {
-            if (EqualityComparer<T>.Default.Equals(node.Next.Value, value))
-            {
-                node.Next.List = null;
-                node.Next = node.Next.Next;
-                Count--;
-                return true;
-            }
-
-            node = node.Next;
-        }
-
-        if (node.Next == null)
-            throw new ArgumentNullException("Node with this value is not in this list");
+        var num = Count;
+        Remove(node!);
 
         return false;
     }

@@ -166,15 +166,15 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             RemoveFirst(); return;
         }
 
-        var start = _first;
-        while (start != null && start.Next != node)
-        {
-            start = start.Next;
-        }
-
-        if (start == _last)
+        if (node == _last)
         {
             RemoveLast(); return;
+        }
+
+        var start = _first;
+        while (start!.Next != node)
+        {
+            start = start.Next;
         }
 
         start!.Next = node.Next;
@@ -186,31 +186,16 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
 
     public bool Remove(T value)
     {
-        ValidateValue_IsNot_Null(value);
-
         if (IsEmpty())
-            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
+            throw new ArgumentNullException("List is already empty. Nothing left to be deleted.");
 
-        if (EqualityComparer<T>.Default.Equals(_first!.Value, value))
-        {
-            RemoveFirst(); return true;
-        }
+        var node = Find(value);
 
-        var node = _first;
-        while (node.Next != null)
-        {
-            if (EqualityComparer<T>.Default.Equals(node.Next.Value, value))
-            {
-                node.Next.List = null;
-                node.Next = node.Next.Next;
-                Count--; return true;
-            }
+        var num = Count;
+        Remove(node!);
 
-            node = node.Next;
-        }
-
-        if (node.Next == null)
-            throw new ArgumentNullException("Node with this value is not in this list");
+        if (num > Count)
+            return true;
 
         return false;
     }
@@ -218,7 +203,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     public void RemoveFirst()
     {
         if (IsEmpty())
-            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
+            throw new ArgumentNullException("List is already empty. Nothing left to be deleted.");
 
         if (_first == _last)
         {
@@ -234,7 +219,7 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
     public void RemoveLast()
     {
         if (IsEmpty())
-            throw new ArgumentNullException("List is already empty. Nothing left to delete.");
+            throw new ArgumentNullException("List is already empty. Nothing left to be deleted.");
 
         if (_first == _last)
         {
@@ -297,9 +282,9 @@ public class DoubleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
         if (node == null)
             throw new ArgumentNullException("Node Can't be empty.");
 
-        if (node!.List == this) 
+        if (node!.List == this)
             return true;
-        else 
+        else
             throw new ArgumentException("Node is not in this list");
     }
 
