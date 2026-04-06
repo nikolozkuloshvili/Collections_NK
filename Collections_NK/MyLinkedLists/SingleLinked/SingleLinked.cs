@@ -21,6 +21,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             _first = node;
             _last = node;
             node.List = this;
+            Count++;
         }
         else
         {
@@ -44,6 +45,7 @@ public class SingleLinkedList<T> : ICollection<T>, IReadOnlyCollection<T>, IColl
             _first = node;
             _last = node;
             node.List = this;
+            Count++;
         }
         else
         {
